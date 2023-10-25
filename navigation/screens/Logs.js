@@ -3,8 +3,7 @@ import {View, Text} from 'react-native'
 
 export default function Logs() {
   return (
-    <div>
-      
+    <div>      
     </div>
   )
 }

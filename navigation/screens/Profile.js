@@ -6,10 +6,8 @@ export default function Profile({navigation}) {
     <div>
         <VIew>
             <Text onPress={()=> navigation.navigate("Profile")}>
-            
             </Text>
         </VIew>
-      
     </div>
   )
 }
