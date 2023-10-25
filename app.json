@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "fitness-proj",
+    "slug": "fitness-proj",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "fitness-proj"
+}
