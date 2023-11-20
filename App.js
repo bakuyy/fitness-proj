@@ -3,11 +3,13 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MainContainer from './navigation/MainContainer';
 
+import Index from "./Components/Stopwatch"
+
 export default function App() {
   return (
     <View style={styles.container}>
       <MainContainer/>
-      <Text>Hello, World!</Text>
+      <Index/>
       <StatusBar style="auto" />
     </View>
   );
