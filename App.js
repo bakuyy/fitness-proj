@@ -13,7 +13,7 @@ export default function App() {
   return (
     <View >
     
-      <Text className="mb-96">Test</Text>
+      <Text className="mb-96"> Margin Test </Text>
       <MainContainer />
       <StatusBar style="auto" />
     </View>
