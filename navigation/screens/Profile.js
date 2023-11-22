@@ -6,7 +6,7 @@ export default function Profile({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text
                 onPress={() => navigation.navigate('Profile')}
-                style={{ fontSize: 26, fontWeight: 'bold' }}>Profile</Text>
+                style={{ fontSize: 26, fontWeight: 'bold' }}> Profile </Text>
         </View>
     );
 }

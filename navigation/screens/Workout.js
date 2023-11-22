@@ -5,7 +5,9 @@ export default function Workout({navigation}) {
   return (
     <View style={styles.container}>
         <Text>
-          Workout
+          <Button>
+            Start Workout
+          </Button>
         </Text>
     
     </View>
