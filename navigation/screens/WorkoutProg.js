@@ -1,15 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-export default function Workout({navigation}) {
-  const startWorkout = () => {
-    navigation.navigate('WorkoutProg'); // Navigate to the workout in progress page
-  }
-
+export default function WorkoutProg() {
   return (
     <View style={styles.container}>
         <Text>
-        <Button title="START YOUR WORKOUT" onPress={startWorkout} />
+          
         </Text>    
     </View>
   )
