@@ -1,11 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 export default function WorkoutProg() {
+  const [workout, startWorkout] = useState("Pushups")
+  
+  handleAdd
+
+  
   return (
     <View style={styles.container}>
         <Text>
-          
+
         </Text>    
     </View>
   )

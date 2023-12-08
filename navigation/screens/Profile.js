@@ -6,8 +6,6 @@ export default function Profile({ navigation }) {
     const [name, setName] = useState('John DoeIHATEHTIS!!!!');
     const [Teacher, sethandleTeacherChange] = useState('15234243223242343434324');
     const [studentNumber, setStudentNumber] = useState('719837')
-
-
   
     const handleNameChange = (text) => {
       setName(text);
