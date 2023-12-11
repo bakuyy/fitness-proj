@@ -4,12 +4,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import MainContainer from './navigation/MainContainer';
 
 import Index from "./Components/Stopwatch"
+import Index2 from "./Components/Timer"
 
 export default function App() {
   return (
     <View style={styles.container}>
       <MainContainer/>
       <Index/>
+      <Index2/>
       <StatusBar style="auto" />
     </View>
   );
