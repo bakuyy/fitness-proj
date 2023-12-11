@@ -1,11 +1,12 @@
-import React from 'react';
+import {View, Text} from 'react-native'
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Logs from './screens/Logs';
 import Profile from './screens/Profile';
-import Workout from './screens/Workout';
+import WorkoutStackNavigator from './WorkoutNav';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,6 +14,7 @@ const NavContainer = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName='Profile'
         screenOptions={{
           style: {
             position: 'absolute',
@@ -39,7 +41,7 @@ const NavContainer = () => {
         />
         <Tab.Screen
           name="Workout"
-          component={Workout}
+          component={WorkoutStackNavigator}
           options={{
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons name={focused ? 'barbell-outline' : 'barbell'} size={size} color={color} />
@@ -55,7 +57,9 @@ const NavContainer = () => {
             ),
           }}
         />
+                
       </Tab.Navigator>
+
     </NavigationContainer>
   );
 };

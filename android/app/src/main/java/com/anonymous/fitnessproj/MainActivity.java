@@ -1,4 +1,4 @@
-package com.fitnessproj;
+package com.anonymous.fitnessproj;
 
 import android.os.Build;
 import android.os.Bundle;
