@@ -1,4 +1,4 @@
-package com.fitnessproj;
+package com.anonymous.fitnessproj;
 
 import android.app.Application;
 import android.content.res.Configuration;
