@@ -13,6 +13,9 @@ NativeWindStyleSheet.setOutput({
   default: 'native',
 });
 
+import Index from "./Components/Stopwatch"
+import Index2 from "./Components/Timer"
+
 export default function App() {
   return (
     // <View style={styles.container}>
