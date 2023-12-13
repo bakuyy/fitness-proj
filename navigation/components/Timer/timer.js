@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#5271FF",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: Platform.OS === 'ios' ? StatusBar.currentHeight : 0,
     paddingHorizontal: 0,
     margin: 0,
   },
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     maxWidth: 100,
     ...Platform.select({
-      android: {
+      ios: {
         color: "#fff",
         backgroundColor: "rgba(92, 92, 92, 0.206)",
       }
@@ -60,9 +59,9 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: 16,
     ...Platform.select({
-      android: {
+      ios: {
         marginLeft: 10,
         marginRight: 10,
       }
@@ -101,7 +100,7 @@ const AVAILABLE_SECONDS = createArray(60);
 
 
 
-export default class Index2 extends Component{
+export default class Timer extends Component{
   state = {
     remainingSeconds: 5,
     isRunning: false,
@@ -216,3 +215,4 @@ export default class Index2 extends Component{
     );
   }
 }
+

@@ -37,7 +37,7 @@ function ButtonsRow({ children }) {
     <View style={styles.buttonsRow}>{children}</View>
   )
 }
-export default class App extends Component {
+export default class Stopwatch extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#5271FF',
         alignItems: 'center',
-        paddingTop: 130,
-        paddingHorizontal: 20,
+        paddingTop: 10,
+        paddingHorizontal: 50,
     },
     timer: {
       color:'#FFFFFF',
