@@ -4,6 +4,7 @@ import Timer from "../components/Timer/timer"
 import Stopwatch from "../components/Stopwatch/stopwatch"
 
 export default function WorkoutProg() {
+  const [name, setName] = useState('');
   const [workout, startWorkout] = useState("Pushups")
   
 

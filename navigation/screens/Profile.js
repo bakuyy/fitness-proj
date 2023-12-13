@@ -25,9 +25,9 @@ export default function Profile({ navigation }) {
       setExerciseInput('');
     };
   
-    const handleSave = () => {
-      console.log(`Name: ${name}, Teacher: ${teacher}, Student Number: ${studentNumber} - Saved!`);
-    };
+    // const handleSave = () => {
+    //   console.log(`Name: ${name}, Teacher: ${teacher}, Student Number: ${studentNumber} - Saved!`);
+    // };
   
     return (
       <View style={styles.container}>

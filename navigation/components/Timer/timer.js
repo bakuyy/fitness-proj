@@ -95,11 +95,6 @@ const AVAILABLE_MINUTES = createArray(10);
 const AVAILABLE_SECONDS = createArray(60);
 
 
-
-
-
-
-
 export default class Timer extends Component{
   state = {
     remainingSeconds: 5,
@@ -182,37 +177,32 @@ export default class Timer extends Component{
     </View>
   );
 
-  render(){
-    const {minutes, seconds} = getRemaining(this.state.remainingSeconds);
-    return(
+  render() {
+    const { minutes, seconds } = getRemaining(this.state.remainingSeconds);
+    return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        {
-          this.state.isRunning ? (
-            <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text>
-          ) : (
-            this.renderPickers()
-          )
-        }
-        {
-          this.state.isRunning ? (
-            <TouchableOpacity 
-              onPress={this.stop}
-              style={[styles.button, styles.buttonStop]}
-              >
-                <Text style={[styles.buttonText, styles.buttonTextStop]}>Stop</Text>
-              </TouchableOpacity>
-          ) : (
-            <TouchableOpacity 
-              onPress={this.start}
-              style={styles.button}
-              >
-                <Text style={styles.buttonText}>Start</Text>
-              </TouchableOpacity>
-          )
-        }
+        {this.state.isRunning ? (
+          <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text>
+        ) : (
+          this.renderPickers()
+        )}
+        {this.state.isRunning ? (
+          <TouchableOpacity
+            onPress={this.stop}
+            style={[styles.button, styles.buttonStop]}
+          >
+            <Text style={[styles.buttonText, styles.buttonTextStop]}>Stop</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={this.start}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Start</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
 }
-
