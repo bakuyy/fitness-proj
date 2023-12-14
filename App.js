@@ -13,8 +13,8 @@ NativeWindStyleSheet.setOutput({
   default: 'native',
 });
 
-import Index from "./Components/Stopwatch"
-import Index2 from "./Components/Timer"
+import Index from "./navigation/components/Stopwatch/stopwatch"
+import Index2 from "./navigation/components/Timer/timer"
 
 export default function App() {
   return (

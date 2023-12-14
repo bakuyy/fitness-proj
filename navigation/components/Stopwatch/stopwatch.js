@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#5271FF',
         alignItems: 'center',
-        paddingTop: 20,
-        paddingHorizontal: 20,
+        paddingTop: 10,
+        paddingHorizontal: 50,
     },
     timer: {
       color:'#FFFFFF',

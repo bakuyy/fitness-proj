@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+
+import React, {Component} from "react";
 import {
   StyleSheet,
   View,
@@ -9,25 +10,25 @@ import {
   Platform
 } from "react-native";
 
-import { Picker } from "@react-native-picker/picker";
+import {Picker} from "@react-native-picker/picker";
 
 const screen = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5271FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: "100%",
-    margin:20,
+    backgroundColor: "#5271FF",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 0,
+    margin: 0,
   },
   button: {
     borderWidth: 10,
     borderColor: "#C1FF72",
-    width: 120,
-    height: 120,
-    borderRadius: 80,
+    width: 100,
+    height: 100,
+    borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 1
@@ -44,42 +45,46 @@ const styles = StyleSheet.create({
   },
   timerText: {
     color: "#fff",
-    fontSize: 40
-  },
-  pickerContainer: {
-    flexDirection: "row",
-    alignItems: "center"
+    fontSize: 30
   },
   picker: {
     flex: 1,
+    maxWidth: 100,
     ...Platform.select({
-      android: {
+      ios: {
+        color: "#fff",
         backgroundColor: "rgba(92, 92, 92, 0.206)",
-        borderRadius: 8,
-        marginHorizontal: 10,
-        height: 50,
-        color: '#fff'
-      },
+      }
     })
   },
   pickerItem: {
     color: "#fff",
-    fontSize: 2,
+    fontSize: 16,
+    ...Platform.select({
+      ios: {
+        marginLeft: 10,
+        marginRight: 10,
+      }
+    })
+  },
+  pickerContainer: {
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 
-const formatNumber = number => `0${number}`.slice(-2);
+const formatNumber = number => `0${number}` . slice(-2);
 
 const getRemaining = time => {
   const minutes = Math.floor(time / 60);
   const seconds = time - minutes * 60;
-  return { minutes: formatNumber(minutes), seconds: formatNumber(seconds) }
+  return {minutes: formatNumber(minutes), seconds: formatNumber(seconds)}
 }
 
 const createArray = length => {
   const arr = [];
   let i = 0;
-  while (i < length) {
+  while(i < length){
     arr.push(i.toString());
     i += 1;
   }
@@ -89,7 +94,8 @@ const createArray = length => {
 const AVAILABLE_MINUTES = createArray(10);
 const AVAILABLE_SECONDS = createArray(60);
 
-export default class Timer extends Component {
+
+export default class Timer extends Component{
   state = {
     remainingSeconds: 5,
     isRunning: false,
@@ -100,23 +106,23 @@ export default class Timer extends Component {
   interval = null;
 
   componentDidUpdate = (prevProp, prevState) => {
-    if (this.state.remainingSeconds === 0 && prevState.remainingSeconds !== 0) {
+    if(this.state.remainingSeconds === 0 && prevState.remainingSeconds !== 0){
       this.stop();
     }
   }
 
   componentWillUnmount() {
-    if (this.interval) {
+    if(this.interval){
       clearInterval(this.interval);
     }
   }
 
   start = () => {
     this.setState(state => ({
-      remainingSeconds:
+      remainingSeconds: 
         parseInt(state.selectedMinutes, 10) * 60 +
         parseInt(state.selectedSeconds, 30),
-      isRunning: true
+        isRunning: true
     }));
     this.interval = setInterval(() => {
       this.setState(state => ({
@@ -136,35 +142,37 @@ export default class Timer extends Component {
 
   renderPickers = () => (
     <View style={styles.pickerContainer}>
-      <View style={styles.picker}>
-        <Picker
-          itemStyle={styles.pickerItem}
-          selectedValue={this.state.selectedMinutes}
-          onValueChange={itemValue => {
-            this.setState({ selectedMinutes: itemValue });
-          }}
-          mode="dropdown"
-        >
-          {AVAILABLE_MINUTES.map(value => (
+      <Picker
+        style={styles.picker}
+        itemStyle={styles.pickerItem}
+        selectedValue={this.state.selectedMinutes}
+        onValueChange={itemValue => {
+          this.setState({selectedMinutes: itemValue});
+        }}
+        mode="dropDown"
+      > 
+        {
+          AVAILABLE_MINUTES.map(value => (
             <Picker.Item key={value} label={value} value={value} />
-          ))}
-        </Picker>
-      </View>
+          ))
+        }
+      </Picker>
       <Text style={styles.pickerItem}>minutes</Text>
-      <View style={styles.picker}>
-        <Picker
-          itemStyle={styles.pickerItem}
-          selectedValue={this.state.selectedSeconds}
-          onValueChange={itemValue => {
-            this.setState({ selectedSeconds: itemValue });
-          }}
-          mode="dropdown"
-        >
-          {AVAILABLE_SECONDS.map(value => (
+      <Picker
+        style={styles.picker}
+        itemStyle={styles.pickerItem}
+        selectedValue={this.state.selectedSeconds}
+        onValueChange={itemValue => {
+          this.setState({selectedSeconds: itemValue});
+        }}
+        mode="dropDown"
+      > 
+        {
+          AVAILABLE_SECONDS.map(value => (
             <Picker.Item key={value} label={value} value={value} />
-          ))}
-        </Picker>
-      </View>
+          ))
+        }
+      </Picker>
       <Text style={styles.pickerItem}>seconds</Text>
     </View>
   );
