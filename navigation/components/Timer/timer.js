@@ -1,5 +1,4 @@
-
-import React, {Component} from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -7,27 +6,33 @@ import {
   Dimensions,
   StatusBar,
   TouchableOpacity,
-  Platform
+  Platform,
 } from "react-native";
 
-import {Picker} from "@react-native-picker/picker";
+import { Picker } from "@react-native-picker/picker";
 
 const screen = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%', // Set width to 100%
     backgroundColor: "#5271FF",
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 0,
-    margin: 0,
+    paddingHorizontal: '5%',
+    paddingVertical: '10%', // Add padding for vertical space
+  },
+  pickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   button: {
-    borderWidth: 10,
+    borderWidth: 7,
     borderColor: "#C1FF72",
-    width: 100,
-    height: 100,
+    width: 70,
+    height: 70,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
@@ -37,7 +42,7 @@ const styles = StyleSheet.create({
     borderColor: "#FF3131"
   },
   buttonText: {
-    fontSize: 30,
+    fontSize: 20,
     color: "#C1FF72"
   },
   buttonTextStop: {
@@ -49,36 +54,36 @@ const styles = StyleSheet.create({
   },
   picker: {
     flex: 1,
-    maxWidth: 100,
+    maxWidth: '30%',
     ...Platform.select({
       ios: {
         color: "#fff",
         backgroundColor: "rgba(92, 92, 92, 0.206)",
-      }
-    })
+        height: '100%', // Set the height to your desired value
+      },
+      android: {
+        color: "#fff",
+      },
+    }),
   },
   pickerItem: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 15,
     ...Platform.select({
       ios: {
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: '2%',
+        marginRight: '2%',
       }
     })
   },
-  pickerContainer: {
-    flexDirection: "row",
-    alignItems: "center"
-  }
 });
 
 const formatNumber = number => `0${number}` . slice(-2);
 
 const getRemaining = time => {
   const minutes = Math.floor(time / 60);
-  const seconds = time - minutes * 60;
-  return {minutes: formatNumber(minutes), seconds: formatNumber(seconds)}
+  const seconds = time % 60; // Use modulo to get seconds
+  return { minutes: formatNumber(minutes), seconds: formatNumber(seconds) };
 }
 
 const createArray = length => {
@@ -91,7 +96,7 @@ const createArray = length => {
   return arr;
 }
 
-const AVAILABLE_MINUTES = createArray(10);
+const AVAILABLE_MINUTES = createArray(60);
 const AVAILABLE_SECONDS = createArray(60);
 
 
@@ -119,11 +124,11 @@ export default class Timer extends Component{
 
   start = () => {
     this.setState(state => ({
-      remainingSeconds: 
-        parseInt(state.selectedMinutes, 10) * 60 +
-        parseInt(state.selectedSeconds, 30),
-        isRunning: true
+      remainingSeconds: parseInt(state.selectedMinutes, 10) * 60 +
+                       parseInt(state.selectedSeconds, 10), // Use base 10 for seconds
+      isRunning: true
     }));
+  
     this.interval = setInterval(() => {
       this.setState(state => ({
         remainingSeconds: state.remainingSeconds - 1

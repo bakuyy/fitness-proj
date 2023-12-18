@@ -164,20 +164,21 @@ export default class Stopwatch extends Component {
 
 const styles = StyleSheet.create({                
     container: {
-        flex: 1,
-        backgroundColor: '#5271FF',
-        alignItems: 'center',
-        paddingTop: 10,
-        paddingHorizontal: 50,
+      flex: 1,
+      backgroundColor: "#5271FF",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingHorizontal: 20,
+      paddingVertical: 20, // Add padding for vertical space
     },
     timer: {
       color:'#FFFFFF',
-      fontSize: 76,
+      fontSize: 50,
       fontWeight: '200',
-      width: 120,
+      width: 100,
     },
     button: {
-      width: 100,
+      width: 80,
       height: 30,
       borderRadius: 30,
       paddingLeft: 12,
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     buttonTitle: {
-      fontSize: 20,
+      fontSize: 16,
     },
     buttonsRow: {
       flexDirection: 'row',

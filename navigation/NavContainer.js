@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Logs from './screens/Logs';
 import Profile from './screens/Profile';
 import WorkoutStackNavigator from './WorkoutNav';
+import Beep from './screens/Beep'
 
 const Tab = createBottomTabNavigator();
 
@@ -57,6 +58,17 @@ const NavContainer = () => {
             ),
           }}
         />
+        <Tab.Screen
+          name = "Beep!"
+          component={Beep}
+          options={{
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons name={focused ? 'list-outline' : 'list'} size={size} color={color} />
+            ),
+          }}  />
+
+          
+
                 
       </Tab.Navigator>
 
