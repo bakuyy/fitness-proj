@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import {firebase} from "C:\Users\sophi\fitness-proj\Firebase\firebase.js"
+// import {firebase} from "C:\Users\sophi\fitness-proj\Firebase\firebase.js"
 import { collection, doc, setDoc } from "firebase/firestore"; 
 
 
@@ -9,7 +9,7 @@ export default function Profile({ navigation }) {
     const [teacher, setTeacher] = useState('');
     const [studentNumber, setStudentNumber] = useState('');
     const [exerciseInput, setExerciseInput] = useState('');
-    const [profileRef] = firebase.firestore().collection("profile")
+    // const [profileRef] = firebase.firestore().collection("profile")
     const [exercises, setExercises] = useState(['Pushups', 'Situps']);
     
     const handleNameChange = (text) => {
