@@ -24,18 +24,29 @@ export default function WorkoutProg() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop:100,
+    paddingBottom:100,
+
   },
   timerContainer: {
-    flex: 1,
+    width:'70%',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius:100,
+    height:'40%',
+    marginBottom:10
+
+
   },
   stopwatchContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    width:'70%',
+    justifyContent:'center',
+    borderRadius:100,
+    height:'60%',
+
+    },
+
 });

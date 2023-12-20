@@ -169,13 +169,15 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
       paddingHorizontal: 20,
-      paddingVertical: 20, // Add padding for vertical space
+      paddingVertical: 5, 
     },
     timer: {
       color:'#FFFFFF',
-      fontSize: 50,
+      fontSize: 30,
       fontWeight: '200',
-      width: 100,
+      width: 80,
+      justifyContent:'center',
+      alignItems:'center',
     },
     button: {
       width: 80,

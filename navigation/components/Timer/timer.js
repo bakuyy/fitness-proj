@@ -29,20 +29,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    borderWidth: 7,
+    borderWidth: 5,
     borderColor: "#C1FF72",
     width: 70,
-    height: 70,
+    height: 40,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 1
+    marginTop: 5
   },
   buttonStop: {
-    borderColor: "#FF3131"
+    borderColor: "#FF3131",
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 10,
     color: "#C1FF72"
   },
   buttonTextStop: {
@@ -50,16 +50,16 @@ const styles = StyleSheet.create({
   },
   timerText: {
     color: "#fff",
-    fontSize: 30
+    fontSize: 20
   },
   picker: {
     flex: 1,
-    maxWidth: '30%',
+    width: 100,
+    height:30,
     ...Platform.select({
       ios: {
         color: "#fff",
         backgroundColor: "rgba(92, 92, 92, 0.206)",
-        height: '100%', // Set the height to your desired value
       },
       android: {
         color: "#fff",
@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     color: "#fff",
+    height:'100%',
+
     fontSize: 15,
     ...Platform.select({
       ios: {
@@ -82,7 +84,7 @@ const formatNumber = number => `0${number}` . slice(-2);
 
 const getRemaining = time => {
   const minutes = Math.floor(time / 60);
-  const seconds = time % 60; // Use modulo to get seconds
+  const seconds = time % 60; 
   return { minutes: formatNumber(minutes), seconds: formatNumber(seconds) };
 }
 
@@ -125,7 +127,7 @@ export default class Timer extends Component{
   start = () => {
     this.setState(state => ({
       remainingSeconds: parseInt(state.selectedMinutes, 10) * 60 +
-                       parseInt(state.selectedSeconds, 10), // Use base 10 for seconds
+                       parseInt(state.selectedSeconds, 10),
       isRunning: true
     }));
   
@@ -146,68 +148,69 @@ export default class Timer extends Component{
   }
 
   renderPickers = () => (
-    <View style={styles.pickerContainer}>
-      <Picker
-        style={styles.picker}
-        itemStyle={styles.pickerItem}
-        selectedValue={this.state.selectedMinutes}
-        onValueChange={itemValue => {
-          this.setState({selectedMinutes: itemValue});
-        }}
-        mode="dropDown"
-      > 
-        {
-          AVAILABLE_MINUTES.map(value => (
-            <Picker.Item key={value} label={value} value={value} />
-          ))
-        }
-      </Picker>
-      <Text style={styles.pickerItem}>minutes</Text>
-      <Picker
-        style={styles.picker}
-        itemStyle={styles.pickerItem}
-        selectedValue={this.state.selectedSeconds}
-        onValueChange={itemValue => {
-          this.setState({selectedSeconds: itemValue});
-        }}
-        mode="dropDown"
-      > 
-        {
-          AVAILABLE_SECONDS.map(value => (
-            <Picker.Item key={value} label={value} value={value} />
-          ))
-        }
-      </Picker>
-      <Text style={styles.pickerItem}>seconds</Text>
-    </View>
-  );
-
-  render() {
-    const { minutes, seconds } = getRemaining(this.state.remainingSeconds);
-    return (
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content" />
-        {this.state.isRunning ? (
-          <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text>
-        ) : (
-          this.renderPickers()
-        )}
-        {this.state.isRunning ? (
-          <TouchableOpacity
-            onPress={this.stop}
-            style={[styles.button, styles.buttonStop]}
-          >
-            <Text style={[styles.buttonText, styles.buttonTextStop]}>Stop</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            onPress={this.start}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Start</Text>
-          </TouchableOpacity>
-        )}
+      <View style={styles.pickerContainer}>
+        <Picker
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+          selectedValue={this.state.selectedMinutes}
+          onValueChange={itemValue => {
+            this.setState({selectedMinutes: itemValue});
+          }}
+          mode="dropDown"
+        > 
+          {
+            AVAILABLE_MINUTES.map(value => (
+              <Picker.Item key={value} label={value} value={value} />
+            ))
+          }
+        </Picker>
+        <Text style={styles.pickerItem}>minutes</Text>
+        <Picker
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+          selectedValue={this.state.selectedSeconds}
+          onValueChange={itemValue => {
+            this.setState({selectedSeconds: itemValue});
+          }}
+          mode="dropDown"
+        > 
+          {
+            AVAILABLE_SECONDS.map(value => (
+              <Picker.Item key={value} label={value} value={value} />
+            ))
+          }
+        </Picker>
+        <Text style={styles.pickerItem}>seconds</Text>
       </View>
+    );
+
+    render() {
+      const { minutes, seconds } = getRemaining(this.state.remainingSeconds);
+      return (
+        <View style={styles.container}>
+          <StatusBar barStyle="light-content" />
+          {this.state.isRunning ? (
+            <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text>
+          ) : (
+            this.renderPickers()
+          )}
+          {this.state.isRunning ? (
+            <TouchableOpacity
+              onPress={this.stop}
+              style={[styles.button, styles.buttonStop]}
+            >
+              <Text style={[styles.buttonText, styles.buttonTextStop]}>Stop</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={this.start}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Start</Text>
+            </TouchableOpacity>
+          )}
+          </View>
+
     );
   }
 }
