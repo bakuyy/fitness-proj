@@ -16,12 +16,12 @@ const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%', // Set width to 100%
+    width: '100%', 
     backgroundColor: "#5271FF",
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: '5%',
-    paddingVertical: '10%', // Add padding for vertical space
+    paddingVertical: '10%', 
   },
   pickerContainer: {
     flexDirection: "row",
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   picker: {
     flex: 1,
     width: 100,
-    height:30,
+    height:37,
     ...Platform.select({
       ios: {
         color: "#fff",

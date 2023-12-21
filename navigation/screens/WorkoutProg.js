@@ -27,26 +27,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop:100,
-    paddingBottom:100,
-
+    paddingTop: 100,
+    paddingBottom: 100,
   },
   timerContainer: {
-    width:'70%',
+    width: '75%',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius:100,
-    height:'40%',
-    marginBottom:10
-
-
+    borderRadius: 5, 
+    height: '40%',
+    marginBottom: 10,
+    borderWidth: 2, 
+    borderColor: "#5271FF", 
   },
   stopwatchContainer: {
-    width:'70%',
-    justifyContent:'center',
-    borderRadius:100,
-    height:'60%',
-
-    },
-
+    width: '70%',
+    justifyContent: 'center',
+    borderRadius: 5, 
+    height: '60%',
+    borderWidth: 2, 
+    borderColor: "#5271FF", 
+  },
 });
+
