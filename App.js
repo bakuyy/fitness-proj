@@ -4,17 +4,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import NavContainer from './navigation/NavContainer';
 import { NativeWindStyleSheet } from 'nativewind';
 
-import Logs from './navigation/screens/Logs';
-import Profile from './navigation/screens/Profile';
-import Workout from './navigation/screens/Workout';
-
 
 NativeWindStyleSheet.setOutput({
   default: 'native',
 });
 
-import Index from "./navigation/components/Stopwatch/stopwatch"
-import Index2 from "./navigation/components/Timer/timer"
 
 export default function App() {
   return (

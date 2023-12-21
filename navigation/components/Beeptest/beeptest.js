@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import Sound from 'react-native-sound';
+// import Sound from 'react-native-sound';
 
 export default function BeepTest() {
   const [currentLevel, setCurrentLevel] = useState(0);
   const [timer, setTimer] = useState(null);
-  const [levelCountdown, setLevelCountdown] = useState(3); // Countdown for each beep test level
+  const [levelCountdown, setLevelCountdown] = useState(3)
 
   useEffect(() => {
     Sound.setCategory('Playback');

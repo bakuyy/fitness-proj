@@ -1,0 +1,6 @@
+        {updated? 
+        (<Button title="Update" onPress={handleUpdate} /> )
+        :
+        (<Button title="Save" onPress={handleSave} /> )
+
+        }

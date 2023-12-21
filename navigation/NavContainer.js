@@ -61,11 +61,11 @@ const NavContainer = () => {
         <Tab.Screen
           name = "Beep!"
           component={Beep}
-          options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? 'list-outline' : 'list'} size={size} color={color} />
-            ),
-          }}  />
+          // options={{
+          //   tabBarIcon: ({ focused, color, size }) => (
+          //     <Ionicons name={focused ? 'list-outline' : 'list'} size={size} color={color} />
+          //   ),
+            />
 
           
 
