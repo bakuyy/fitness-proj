@@ -4,7 +4,8 @@ import { Picker } from '@react-native-picker/picker'
 import Timer from "../components/Timer/timer"
 import Stopwatch from "../components/Stopwatch/stopwatch"
 import { FIREBASE_DB } from '../Firebase/creds';
-import { collection, doc, getDoc } from '@firebase/firestore';
+import { doc, getDoc } from '@firebase/firestore';
+import Repcounter from '../components/RepCounter/repcounter'
 
 export default function WorkoutProg() {
   const [name, setName] = useState('');
@@ -12,52 +13,52 @@ export default function WorkoutProg() {
   const [getArray, setGetArray] = useState([])
   const [selectedExercise, setSelectedExercise] = useState('')
 
-  // useEffect(() => {
-  //   const fetchArray = async () => {
-  //     const docRef = FIREBASE_DB(collection('profiles')(doc('Profile')));
-  //     const docSnapshot = await docRef.get()
-  //     const data = docSnapshot.data() || {}
-  //     setGetArray(data.exercises || [])
-  //   }
-  //   fetchArray()
-  // }
-  // )
+
 
   const fetchArray = async () => {
     const docRef = doc(FIREBASE_DB, "profiles", "Profile");
     const docSnapshot = await getDoc(docRef);
     
     const data = docSnapshot.data() || {}
-    const exercisesArray = data.exercises || 
+    const exercisesArray = data.exercises || {}
     
     setGetArray(exercisesArray);
 
-    console.log("AHH" , exercisesArray)
-  };
+  }
 
-  useEffect(() => {
-    fetchArray()
-  }, [])
+  // useEffect(() => {
+  //   fetchArray()
+  // }, [])
 
   return (
     <View style={styles.container}>
-    <Button style={styles.texr} title="View" onPress={fetchArray}> Yes </Button>
+    <Button style={styles.text} title="VIEW" onPress={fetchArray}/>
     <Picker
         selectedValue={selectedExercise}
         style={styles.picker}
         onValueChange={(itemValue) => setSelectedExercise(itemValue)}
       >
         <Picker.Item label="Select an exercise" value="" />
+        
         {getArray.map((exercise, index) => (
           <Picker.Item key={index} label={exercise} value={exercise} />
         ))}
+        
       </Picker>
+      <View style={styles.repCounter}>
+      <Repcounter/>
+    </View>
       <View style={styles.timerContainer}>
         <Timer />
       </View>
       <View style={styles.stopwatchContainer}>
         <Stopwatch />
       </View>
+
+      <View style={styles.button}>
+      <Button title="Save" /> 
+      </View>
+
     </View>
   );
 }
@@ -109,8 +110,19 @@ const styles = StyleSheet.create({
   pickerItem: {
     fontSize: 18,
     color: '#fff', 
-
   },
+  repCounter: {
+    color:'white',
+    backgroundColor:'#fff',
+    height:'15%',
+    marginVertical:9
+
+  }, 
+
+  button: {
+    marginTop:10,
+
+  }
 
 });
 

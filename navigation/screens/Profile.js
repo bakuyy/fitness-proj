@@ -12,6 +12,8 @@ export default function Profile({ navigation }) {
   const [exerciseInput, setExerciseInput] = useState('');
   const [exercises, setExercises] = useState(['Pushups', 'Situps']);
   const [updated, setUpdated] = useState(false)
+  const [testUpdated, testSetUpdated] = useState(false)
+
   // var ID = ''
   const userID = "Profile"
 
@@ -48,10 +50,25 @@ export default function Profile({ navigation }) {
       teacher: teacher,
       studentNumber: studentNumber,
       exercises: exercises,
-    });
-    console.log("Document added with ID: ", docRef.id);
+    })
     setUpdated(true);
+  }
+  
+  const TestDB = async () => {
+    testRef = doc(collection(FIREBASE_DB, "workouts"))
+    
+    await setDoc(
+      testRef, {
+      pushups: 1,
+      blabalbl:2,
+      adifjo:3,
+      id: testRef.id
+    });
+    testSetUpdated(true);
+
   };
+
+
 
   return (
     <View style={styles.container}>
@@ -106,10 +123,8 @@ export default function Profile({ navigation }) {
       </View>
 
       <View style={styles.addButton}>
- 
-
         <Button title="Save" onPress={handleSave} /> 
-
+        <Button title="test" onPress={TestDB} /> 
         </View>
       </View>
       );

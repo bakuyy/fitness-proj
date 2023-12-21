@@ -4,3 +4,27 @@
         (<Button title="Save" onPress={handleSave} /> )
 
         }
+
+
+          // useEffect(() => {
+  //   const fetchArray = async () => {
+  //     const docRef = FIREBASE_DB(collection('profiles')(doc('Profile')));
+  //     const docSnapshot = await docRef.get()
+  //     const data = docSnapshot.data() || {}
+  //     setGetArray(data.exercises || [])
+  //   }
+  //   fetchArray()
+  // }
+  // )
+
+        <CreateLog logNumber={1} logName={array}/>
+      <CreateLog logNumber={2} logName={array}/>
+      <CreateLog logNumber={3} logName={array}/>
+      <CreateLog logNumber={4} logName={array}/>
+      <CreateLog logNumber={5} logName={array}/>
+      <CreateLog logNumber={6} logName={array}/>
+
+
+      <View >
+        <Text style={styles.logNumber} >{logNumber}</Text>
+      </View>
