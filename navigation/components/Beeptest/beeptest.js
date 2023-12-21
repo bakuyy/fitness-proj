@@ -21,18 +21,18 @@ const BeepTest = () => {
     return Math.round(20 / speedInMetersPerSec);
   }
 
-  // function playBeep(times = 1) {
-  //   let count = 0;
-  //   const beepInterval = setInterval(() => {
-  //     beepSound.play((success) => {
-  //       if (!success) {
-  //         console.log('Failed to play the beep');
-  //       }
-  //     });
-  //     count++;
-  //     if (count >= times) clearInterval(beepInterval);
-  //   }, 500); 
-  // }
+  function playBeep(times = 1) {
+    let count = 0;
+    const beepInterval = setInterval(() => {
+      beepSound.play((success) => {
+        if (!success) {
+          console.log('Failed to play the beep');
+        }
+      });
+      count++;
+      if (count >= times) clearInterval(beepInterval);
+    }, 500); 
+  }
 
   useEffect(() => {
     if (running && level === 21) {
@@ -54,7 +54,7 @@ const BeepTest = () => {
           setSpeed(newSpeed);
           setLevel((prevLevel) => prevLevel + 1);
           setBeepCountdown(Math.round(calculateBeepTime(newSpeed)));
-          playBeep(2); // Play beep twice for level change
+          playBeep(2); 
         }
       }, 1000);
     }
@@ -70,8 +70,8 @@ const BeepTest = () => {
         setBeepCountdown((prevCountdown) => {
           let newCountdown = prevCountdown - 1;
           if (newCountdown <= 0) {
-            playBeep(); // Play a single beep when countdown reaches 0
-            return Math.round(calculateBeepTime(speed)); // Reset countdown
+            playBeep(); 
+            return Math.round(calculateBeepTime(speed)); 
           }
           return newCountdown;
         });
@@ -89,7 +89,7 @@ const BeepTest = () => {
       setSpeed(8.5);
       setNextLevelTime(60);
       setBeepCountdown(Math.round(calculateBeepTime(8.5)));
-      playBeep(2); // Play beep twice when starting
+      playBeep(2); 
     }
   };
 
