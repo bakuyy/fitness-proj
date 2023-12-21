@@ -9,7 +9,7 @@ import {
   Platform,
 } from "react-native";
 
-import { Picker } from "@react-native-picker/picker";
+import { Picker } from "@react-native-picker/picker";     
 
 const screen = Dimensions.get("window");
 
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   picker: {
     flex: 1,
     width: 100,
-    height:37,
+    height:40,
     ...Platform.select({
       ios: {
         color: "#fff",
@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     height:'100%',
 
-    fontSize: 15,
+    fontSize: 14,
     ...Platform.select({
       ios: {
-        marginLeft: '2%',
-        marginRight: '2%',
+        marginLeft: '%',
+        marginRight: '%',
       }
     })
   },

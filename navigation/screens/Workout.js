@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
-import WorkoutProg from './WorkoutProg';
 
 export default function Workout({navigation}) {
 

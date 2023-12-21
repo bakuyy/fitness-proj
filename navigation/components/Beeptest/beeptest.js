@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Sound from 'react-native-sound';
 
-
 const beepSound = new Sound('beep.mp3', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
     console.log('Failed to load the sound', error);
@@ -32,7 +31,7 @@ const BeepTest = () => {
       });
       count++;
       if (count >= times) clearInterval(beepInterval);
-    }, 500); 
+    }, 500); // 500ms interval between beeps
   }
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const BeepTest = () => {
           setSpeed(newSpeed);
           setLevel((prevLevel) => prevLevel + 1);
           setBeepCountdown(Math.round(calculateBeepTime(newSpeed)));
-          playBeep(2); 
+          playBeep(2); // Play beep twice for level change
         }
       }, 1000);
     }
@@ -71,8 +70,8 @@ const BeepTest = () => {
         setBeepCountdown((prevCountdown) => {
           let newCountdown = prevCountdown - 1;
           if (newCountdown <= 0) {
-            playBeep(); 
-            return Math.round(calculateBeepTime(speed)); 
+            playBeep(); // Play a single beep when countdown reaches 0
+            return Math.round(calculateBeepTime(speed)); // Reset countdown
           }
           return newCountdown;
         });
@@ -90,7 +89,7 @@ const BeepTest = () => {
       setSpeed(8.5);
       setNextLevelTime(60);
       setBeepCountdown(Math.round(calculateBeepTime(8.5)));
-      playBeep(2); 
+      playBeep(2); // Play beep twice when starting
     }
   };
 
