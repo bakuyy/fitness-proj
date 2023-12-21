@@ -1,98 +1,135 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Sound from 'react-native-sound';
 
-export default function BeepTest() {
-  const [currentLevel, setCurrentLevel] = useState(0);
-  const [timer, setTimer] = useState(null);
-  const [levelCountdown, setLevelCountdown] = useState(3)
+const beepSound = new Sound('beep.mp3', Sound.MAIN_BUNDLE, (error) => {
+  if (error) {
+    console.log('Failed to load the sound', error);
+  }
+});
 
-  useEffect(() => {
-    Sound.setCategory('Playback');
-  }, []);
+const BeepTest = () => {
+  const [level, setLevel] = useState(1);
+  const [time, setTime] = useState(0);
+  const [nextLevelTime, setNextLevelTime] = useState(60);
+  const [beepCountdown, setBeepCountdown] = useState(Math.round(calculateBeepTime(8.5)));
+  const [running, setRunning] = useState(false);
+  const [speed, setSpeed] = useState(8.5);
 
-  const playSound = () => {
-    const sound = new Sound('beep.mp3', Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
-      }
-      sound.play((success) => {
-        if (success) {
-          console.log('successfully finished playing');
-        } else {
-          console.log('playback failed due to audio decoding errors');
+  function calculateBeepTime(speed) {
+    const speedInMetersPerSec = speed / 3.6;
+    return Math.round(20 / speedInMetersPerSec);
+  }
+
+  function playBeep(times = 1) {
+    let count = 0;
+    const beepInterval = setInterval(() => {
+      beepSound.play((success) => {
+        if (!success) {
+          console.log('Failed to play the beep');
         }
       });
-    });
-  };
+      count++;
+      if (count >= times) clearInterval(beepInterval);
+    }, 500); // 500ms interval between beeps
+  }
 
-  const startTest = () => {
-    if (timer) clearInterval(timer);
+  useEffect(() => {
+    if (running && level === 21) {
+      setRunning(false);
+      alert('Test completed at level 21');
+    }
+  }, [level, running]);
 
-    let level = 1;
-    const interval = setInterval(() => {
-      setCurrentLevel(level);
-      setLevelCountdown(3); // Reset countdown for each level
-      initiateLevelCountdown(level); // Start countdown for the level
+  useEffect(() => {
+    let intervalId;
 
-      // Check conditions to increase level or stop
-      if (level < 20) {  // Example: stop after 20 levels
-        level++;
-      } else {
-        clearInterval(interval); // Stop the interval
-      }
-    }, 4000); // Each level has a 3-second countdown + 1-second buffer
+    if (running) {
+      intervalId = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+        setNextLevelTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 60));
 
-    setTimer(interval);
-  };
+        if (nextLevelTime === 1) {
+          const newSpeed = speed + 0.5;
+          setSpeed(newSpeed);
+          setLevel((prevLevel) => prevLevel + 1);
+          setBeepCountdown(Math.round(calculateBeepTime(newSpeed)));
+          playBeep(2); // Play beep twice for level change
+        }
+      }, 1000);
+    }
 
-  const initiateLevelCountdown = (level) => {
-    let countdownValue = 3;
-    const levelInterval = setInterval(() => {
-      setLevelCountdown(countdownValue);
+    return () => clearInterval(intervalId);
+  }, [running, speed, nextLevelTime]);
 
-      if (countdownValue === 0) {
-        clearInterval(levelInterval); // Stop the countdown for this level
-        playSound(); // Play the beep sound after countdown
-      }
+  useEffect(() => {
+    let beepIntervalId;
 
-      countdownValue--;
-    }, 1000);
-  };
+    if (running) {
+      beepIntervalId = setInterval(() => {
+        setBeepCountdown((prevCountdown) => {
+          let newCountdown = prevCountdown - 1;
+          if (newCountdown <= 0) {
+            playBeep(); // Play a single beep when countdown reaches 0
+            return Math.round(calculateBeepTime(speed)); // Reset countdown
+          }
+          return newCountdown;
+        });
+      }, 1000);
+    }
 
-  const stopTest = () => {
-    if (timer) {
-      clearInterval(timer);
-      setTimer(null);
-      setCurrentLevel(0);
-      setLevelCountdown(3); // Reset countdown value if needed
+    return () => clearInterval(beepIntervalId);
+  }, [running, speed]);
+
+  const toggleRunning = () => {
+    setRunning((prevRunning) => !prevRunning);
+    if (!running) {
+      setTime(0);
+      setLevel(1);
+      setSpeed(8.5);
+      setNextLevelTime(60);
+      setBeepCountdown(Math.round(calculateBeepTime(8.5)));
+      playBeep(2); // Play beep twice when starting
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Current Level: {currentLevel}</Text>
-      <Text style={styles.countdownText}>Countdown: {levelCountdown} seconds</Text>
-      <Button title="Start Test" onPress={startTest} />
-      <Button title="Stop Test" onPress={stopTest} />
+      <Text style={styles.title}>BEEP TEST</Text>
+      <Text>Level: {level}</Text>
+      <Text>Time: {new Date(time * 1000).toISOString().substr(14, 5)}</Text>
+      <Text>Next Level In: {nextLevelTime} secs</Text>
+      <Text>Beep Countdown: {beepCountdown} secs</Text>
+      <Text>Speed: {speed.toFixed(1)} Kph</Text>
+      <TouchableOpacity style={styles.button} onPress={toggleRunning} disabled={level === 21}>
+        <Text style={styles.buttonText}>{running ? 'STOP' : 'START'}</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
   },
-  text: {
-    fontSize: 20,
+  title: {
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  countdownText: {
-    fontSize: 18,
     marginBottom: 20,
   },
+  button: {
+    marginTop: 20,
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+  },
 });
+
+export default BeepTest;
