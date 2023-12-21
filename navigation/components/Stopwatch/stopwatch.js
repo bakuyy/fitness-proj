@@ -10,8 +10,8 @@ function Timer({ interval, style }) {
   const centiseconds = Math.floor(duration.milliseconds() / 10)
   return (
     <View style={styles.timerContainer}>
-      <Text style={style}>{pad(duration.minutes())}:</Text>
-      <Text style={style}>{pad(duration.seconds())}.</Text>
+      <Text style={[style, styles.textSpacing]}>{pad(duration.minutes())}:</Text>
+      <Text style={[style, styles.textSpacing]}>{pad(duration.seconds())}.</Text>
       <Text style={style}>{pad(centiseconds)}</Text>
     </View>
   )
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     },
     timer: {
       color:'#FFFFFF',
-      fontSize: 30,
+      fontSize: 50,
       fontWeight: '200',
       width: 80,
       justifyContent:'center',
@@ -197,12 +197,15 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignSelf: 'stretch',
       justifyContent: 'space-between',
-      marginTop: 80,
+      marginTop: 60,
     },
     timerContainer: {
       flexDirection: 'row',
     },
     timerText: {
       fontFamily: 'monospace',
+    },
+    textSpacing: {
+      marginRight: -5,
     }
 })

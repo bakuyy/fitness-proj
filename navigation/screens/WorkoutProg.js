@@ -84,7 +84,9 @@ const styles = StyleSheet.create({
   stopwatchContainer: {
     width:'70%',
     justifyContent:'center',
-    borderRadius:100,
+    borderRadius: 5,
+    borderWidth: 2, 
+    borderColor: "#5271FF", 
     height:'60%',
 
     },
