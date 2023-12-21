@@ -10,8 +10,8 @@ export default function Logs() {
   const [getArray, setGetArray] = useState([])
 
   const fetchArray = async () => {
-    const docRef = collection(FIREBASE_DB, "workouts");
-    const querySnapshot = await getDocs(docRef);
+    // const docRef = collection(FIREBASE_DB, "workouts");
+    // const querySnapshot = await getDocs(docRef);
     // var specDoc = querySnapshot.forEach((doc) => {
     // //   console.log(doc.id, " => ", doc.data())
     // const data = querySnapshot.data() || {}
@@ -20,26 +20,41 @@ export default function Logs() {
     // setGetArray(exercisesArray)
     // console.log(exercisesArray)
     // console.log("TEST", exercisesArray)
-    console.log("TEST", querySnapshot)
-    }
-  
+    // console.log("TEST", querySnapshot)
+    const docRef = collection(FIREBASE_DB, 'workouts');
+    const querySnapshot = await getDocs(docRef);
 
+    const fetchedData = [];
+    querySnapshot.forEach((doc) => {
+      fetchedData.push({ id: doc.id, ...doc.data() });
+    })
+
+    console.log(fetchedData)
+    setGetArray(fetchedData)
+    console.log("ARRAY,", setGetArray)
+  }
+  
   return (
     <View style={styles.container}>
-    <ScrollView>
-    <View style={styles.button}>
-      <Button title='view'  onPress={fetchArray}/>
+      <ScrollView>
+        <View style={styles.button}>
+          <Button title='view' onPress={fetchArray}/>
+        </View>
+        <View>
+          {getArray.map((logItem, index) => (
+            <CreateLog
+              key={index}
+              logName={Object.keys(logItem)} 
+              exercisesArray={Object.values(logItem)}
+            />
+          ))}
+        </View>
+        <View>
+          <Text style={styles.text}>View Logs</Text>
+        </View>
+      </ScrollView>
     </View>
-    <View>
-      <Text style={styles.text}>View Logs</Text>
-
-    </View>
-    </ScrollView>
-
-
-
-    </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

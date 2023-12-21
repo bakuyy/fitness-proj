@@ -28,3 +28,13 @@
       <View >
         <Text style={styles.logNumber} >{logNumber}</Text>
       </View>
+
+
+
+
+            {exercisesArray.map((exercise, index) => (
+        <View key={index} style={styles.logName}>
+          <Text>Exercise {index + 1}</Text>
+          <Text >{exercise}</Text>
+        </View>
+      ))}

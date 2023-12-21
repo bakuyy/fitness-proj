@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Sound from 'react-native-sound';
+// import Sound from 'react-native-sound';
 
-const beepSound = new Sound('beep.mp3', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('Failed to load the sound', error);
-  }
-});
+// const beepSound = new Sound('beep.mp3', Sound.MAIN_BUNDLE, (error) => {
+//   if (error) {
+//     console.log('Failed to load the sound', error);
+//   }
+// });
 
 const BeepTest = () => {
   const [level, setLevel] = useState(1);
@@ -21,18 +21,18 @@ const BeepTest = () => {
     return Math.round(20 / speedInMetersPerSec);
   }
 
-  function playBeep(times = 1) {
-    let count = 0;
-    const beepInterval = setInterval(() => {
-      beepSound.play((success) => {
-        if (!success) {
-          console.log('Failed to play the beep');
-        }
-      });
-      count++;
-      if (count >= times) clearInterval(beepInterval);
-    }, 500); // 500ms interval between beeps
-  }
+  // function playBeep(times = 1) {
+  //   let count = 0;
+  //   const beepInterval = setInterval(() => {
+  //     beepSound.play((success) => {
+  //       if (!success) {
+  //         console.log('Failed to play the beep');
+  //       }
+  //     });
+  //     count++;
+  //     if (count >= times) clearInterval(beepInterval);
+  //   }, 500); 
+  // }
 
   useEffect(() => {
     if (running && level === 21) {

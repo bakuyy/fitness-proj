@@ -59,10 +59,10 @@ export default function Profile({ navigation }) {
     
     await setDoc(
       testRef, {
-      pushups: 1,
-      blabalbl:2,
-      adifjo:3,
-      id: testRef.id
+      Pushups: 1,
+      Situps: 42,
+      Pullups: 10,
+      BeepTest: '5:30'
     });
     testSetUpdated(true);
 
