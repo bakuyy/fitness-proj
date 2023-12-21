@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignSelf: 'stretch',
       justifyContent: 'space-between',
-      marginTop: 80,
+      marginTop: 10,
     },
     timerContainer: {
       flexDirection: 'row',
