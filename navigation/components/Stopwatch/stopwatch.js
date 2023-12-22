@@ -38,8 +38,10 @@ export default class Stopwatch extends Component {
     this.state = {
       start: 0,
       now: 0,
-      laps: [],
-    };
+      laps: [ ],
+      elapsed: 0,
+      stopped: false,
+    }
   }
 
   componentWillUnmount() {
@@ -69,31 +71,46 @@ export default class Stopwatch extends Component {
     });
   };
 
+  formatTime = (totalSeconds) => {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
   stop = () => {
     clearInterval(this.timer);
-    const { laps, now, start } = this.state;
-    const [firstLap, ...other] = laps;
+    const { now, start } = this.state;
+    const elapsed = now - start
+
+
     this.setState({
-      laps: [firstLap + now - start, ...other],
-      start: 0,
-      now: 0,
+      elapsed,
+      stopped: true,
     });
-  };
+
+    const formattedTime = this.formatTime(Math.floor(elapsed / 1000));
+    if (this.props.onStop) {
+        this.props.onStop(formattedTime);
+    }
+}
+
 
   reset = () => {
     this.setState({
       laps: [],
       start: 0,
       now: 0,
-    });
-  };
-
+      elapsed: 0,
+      stopped: false,
+    })
+  }
   resume = () => {
-    const now = new Date().getTime();
-    this.setState({
-      start: now,
+    const now = new Date().getTime()
+    this.setState(state => ({
+      start: now - state.elapsed,
       now,
-    });
+      stopped: false,
+    }))
     this.timer = setInterval(() => {
       this.setState({ now: new Date().getTime() });
     }, 100);
@@ -113,22 +130,52 @@ export default class Stopwatch extends Component {
    }
 
   render() {
-    const { now, start, laps } = this.state;
-    const timer = now - start;
+    const { now, start, laps, stopped } = this.state
+    const timer = stopped ? this.state.elapsed : (now - start)
     return (
       <View style={styles.container}>
         <Timer interval={laps.reduce((total, curr) => total + curr, 0) + timer} style={styles.timer} />
         {laps.length === 0 && (
           <ButtonsRow>
-            <RoundButton
-              title='START'
-              color='#000000'
-              background='#C1FF72'
-              onPress={this.start}
-            />
-            <RoundButton
-              title='RESET'
-              color='#000000'
+            <RoundButton 
+            title='START' 
+            color='#000000' 
+            background='#C1FF72'
+            onPress={this.start}/>
+            
+            <RoundButton 
+            title='RESET' 
+            color='#000000' 
+            background='#FFDE59'
+            onPress={this.reset}/>
+            
+          </ButtonsRow> 
+        )}
+        
+
+          {laps.length > 0 && stopped == false && (
+            <ButtonsRow>
+              <RoundButton 
+              title='STOP' 
+              color='#000000' 
+              background='#FF3131'
+              onPress={this.stop}/>
+
+
+          </ButtonsRow>
+          )}
+
+{laps.length > 0 && stopped === true && (
+          <ButtonsRow>
+            <RoundButton 
+            title='START' 
+            color='#000000' 
+            background='#C1FF72'
+            onPress={this.resume}/>
+
+            <RoundButton 
+              title='RESET' 
+              color='#000000' 
               background='#FFDE59'
               onPress={this.reset}
             />
