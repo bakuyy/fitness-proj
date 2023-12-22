@@ -29,7 +29,6 @@ const RepCounter = () => {
         </Picker>
         <Text>{rep}</Text>
 
-      
       </View>
     </View>
   )
@@ -56,12 +55,13 @@ const styles = StyleSheet.create({
     marginBottom:10
   },
   picker: {
-    marginTop: 9,
+    marginTop: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    padding: 20,
+    padding: 100,
     flex: 1,
+    marginBottom: 100, 
 
   },
   selectedNumber: {

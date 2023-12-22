@@ -1,205 +1,219 @@
-import React, { useState, useEffect } from 'react'
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  StatusBar,
-  TouchableOpacity,
-  Platform,
-} from 'react-native'
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 
-import { Picker } from '@react-native-picker/picker'
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    // backgroundColor: "#5271FF",
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: '5%',
-    paddingVertical: '10%',
-  },
-  pickerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    borderWidth: 5,
-    borderColor: '#C1FF72',
-    width: 70,
-    height: 40,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 5,
-  },
-  buttonStop: {
-    borderColor: '#FF3131',
-  },
-  buttonText: {
-    fontSize: 10,
-    color: '#C1FF72',
-  },
-  buttonTextStop: {
-    color: '#FF3131',
-  },
-  timerText: {
-    color: '#fff',
-    fontSize: 20,
-  },
-  picker: {
-    flex: 1,
-    width: 100,
-    height: 40,
-    ...(Platform.select({
-      ios: {
-        color: '#fff',
-        backgroundColor: 'rgba(92, 92, 92, 0.206)',
-      },
-      android: {
-        color: '#fff',
-      },
-    })),
-  },
-  button2: {
-    borderWidth: 5,
-    borderColor: '#C1FF72',
-    marginTop:10,
-    borderRadius:20
-
-
-  },
-  pickerItem: {
-    color: '#fff',
-    height: '100%',
-    fontSize: 14,
-    ...(Platform.select({
-      ios: {
-        marginLeft: '%',
-        marginRight: '%',
-      },
-    })),
-  },
-})
-
-const formatNumber = number => `0${number}` . slice(-2)
-
-const getRemaining = time => {
-  const minutes = Math.floor(time / 60)
-  const seconds = time % 60
-  return { minutes: formatNumber(minutes), seconds: formatNumber(seconds) }
-}
-
-const createArray = length => {
-  const arr = []
-  let i = 0
-  while(i < length){
-    arr.push(i.toString())
-    i += 1
-  }
-  return arr
-}
-
-const AVAILABLE_MINUTES = createArray(60)
-const AVAILABLE_SECONDS = createArray(60)
-
-const Timer = () => {
-  const [remainingSeconds, setRemainingSeconds] = useState(5)
-  const [isRunning, setIsRunning] = useState(false)
-  const [selectedMinutes, setSelectedMinutes] = useState('0')
-  const [selectedSeconds, setSelectedSeconds] = useState('5')
-
-  let interval = null
-
-  useEffect(() => {
-    if (remainingSeconds === 0 && isRunning) {
-      stop()
-    }
-  }, [remainingSeconds, isRunning])
-
-  const start = () => {
-    setRemainingSeconds(
-      parseInt(selectedMinutes, 10) * 60 + parseInt(selectedSeconds, 10)
-    )
-    setIsRunning(true)
-
-    interval = setInterval(() => {
-      setRemainingSeconds(prevSeconds => prevSeconds - 1)
-    }, 1000)
-  }
-
-  const stop = () => {
-    clearInterval(interval)
-    interval = null
-    setRemainingSeconds(5)
-    setIsRunning(false)
-  }
-
-  const handleTimeChange = () => {
-    const timeString = `${selectedMinutes}:${selectedSeconds}`
-    console.log('Selected time:', timeString)
-    // Do something with the timeString, e.g., save it
-  }
-
-  const renderPickers = () => (
-    <View style={styles.pickerContainer}>
-      <Picker
-        style={styles.picker}
-        itemStyle={styles.pickerItem}
-        selectedValue={selectedMinutes}
-        onValueChange={itemValue => setSelectedMinutes(itemValue)}
-        mode="dropdown"
-      >
-        {AVAILABLE_MINUTES.map(value => (
-          <Picker.Item key={value} label={value} value={value} />
-        ))}
-      </Picker>
-      <Text style={styles.pickerItem}>minutes</Text>
-      <Picker
-        style={styles.picker}
-        itemStyle={styles.pickerItem}
-        selectedValue={selectedSeconds}
-        onValueChange={itemValue => setSelectedSeconds(itemValue)}
-        mode="dropdown"
-      >
-        {AVAILABLE_SECONDS.map(value => (
-          <Picker.Item key={value} label={value} value={value} />
-        ))}
-      </Picker>
-      <Text style={styles.pickerItem}>seconds</Text>
-    </View>
-  )
-
-  const { minutes, seconds } = getRemaining(remainingSeconds)
-
+function Timer({ interval, style }) {
+  const pad = (n) => (n < 10 ? '0' + n : n);
+  const duration = moment.duration(interval);
+  const centiseconds = Math.floor(duration.milliseconds() / 10);
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="light-content" />
-      {isRunning ? (
-        <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text>
-      ) : (
-        renderPickers()
-      )}
-      {isRunning ? (
-        <TouchableOpacity
-          onPress={stop}
-          style={[styles.button, styles.buttonStop]}
-        >
-          <Text style={[styles.buttonText, styles.buttonTextStop]}>Stop</Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={start} style={styles.button}>
-          <Text style={styles.buttonText}>Start</Text>
-        </TouchableOpacity>
-      )}
-
-      <TouchableOpacity onPress={handleTimeChange} style={styles.button2}>
-      </TouchableOpacity>
+    <View style={styles.timerContainer}>
+      <Text style={[style, styles.textSpacing]}>{pad(duration.minutes())}:</Text>
+      <Text style={[style, styles.textSpacing]}>{pad(duration.seconds())}.</Text>
+      <Text style={style}>{pad(centiseconds)}</Text>
     </View>
-  )
+  );
 }
 
-export default Timer
+function RoundButton({ title, color, background, onPress, disabled }) {
+  return (
+    <TouchableOpacity
+      onPress={() => !disabled && onPress()}
+      style={[styles.button, { backgroundColor: background }]}
+      activeOpacity={disabled ? 1.0 : 0.7}>
+      <View style={styles.buttonBorder}>
+        <Text style={[styles.buttonTitle, { color }]}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function ButtonsRow({ children }) {
+  return <View style={styles.buttonsRow}>{children}</View>;
+}
+
+export default class Stopwatch extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      start: 0,
+      now: 0,
+      laps: [],
+    };
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  start = () => {
+    const now = new Date().getTime();
+    this.setState({
+      start: now,
+      now,
+      laps: [0],
+    });
+    this.timer = setInterval(() => {
+      this.setState({ now: new Date().getTime() });
+    }, 100);
+  };
+
+  lap = () => {
+    const timestamp = new Date().getTime();
+    const { laps, now, start } = this.state;
+    const [firstLap, ...other] = laps;
+    this.setState({
+      laps: [0, firstLap + now - start, ...other],
+      start: timestamp,
+      now: timestamp,
+    });
+  };
+
+  stop = () => {
+    clearInterval(this.timer);
+    const { laps, now, start } = this.state;
+    const [firstLap, ...other] = laps;
+    this.setState({
+      laps: [firstLap + now - start, ...other],
+      start: 0,
+      now: 0,
+    });
+  };
+
+  reset = () => {
+    this.setState({
+      laps: [],
+      start: 0,
+      now: 0,
+    });
+  };
+
+  resume = () => {
+    const now = new Date().getTime();
+    this.setState({
+      start: now,
+      now,
+    });
+    this.timer = setInterval(() => {
+      this.setState({ now: new Date().getTime() });
+    }, 100);
+  };
+
+  logTime = () => {
+    const { now, start, laps } = this.state;
+    const timer = now - start;
+    const totalMilliseconds = laps.reduce((total, curr) => total + curr, 0) + timer;
+    const duration = moment.duration(totalMilliseconds);
+    const formattedTime = `${duration.hours()}:${duration.minutes()}:${duration.seconds()}.${Math.floor(
+      duration.milliseconds() / 10
+    )}`;
+    console.log(formattedTime);
+  };
+
+  render() {
+    const { now, start, laps } = this.state;
+    const timer = now - start;
+    return (
+      <View style={styles.container}>
+        <Timer interval={laps.reduce((total, curr) => total + curr, 0) + timer} style={styles.timer} />
+        {/* Buttons */}
+        {laps.length === 0 && (
+          <ButtonsRow>
+            <RoundButton
+              title='START'
+              color='#000000'
+              background='#C1FF72'
+              onPress={this.start}
+            />
+            <RoundButton
+              title='RESET'
+              color='#000000'
+              background='#FFDE59'
+              onPress={this.reset}
+            />
+          </ButtonsRow>
+        )}
+
+        {start > 0 && (
+          <ButtonsRow>
+            <RoundButton
+              title='STOP'
+              color='#000000'
+              background='#FF3131'
+              onPress={() => {
+                this.stop();
+                this.logTime();
+              }}
+            />
+          </ButtonsRow>
+        )}
+
+        {laps.length > 0 && start === 0 && (
+          <ButtonsRow>
+            <RoundButton
+              title='START'
+              color='#000000'
+              background='#C1FF72'
+              onPress={this.resume}
+            />
+            <RoundButton
+              title='RESET'
+              color='#000000'
+              background='#FFDE59'
+              onPress={this.reset}
+            />
+          </ButtonsRow>
+        )}
+      </View>
+    );
+  }
+}
+
+
+const styles = StyleSheet.create({                
+    container: {
+      flex: 1,
+      // backgroundColor: "#5271FF",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingHorizontal: 20,
+      paddingVertical: 5, 
+    },
+    timer: {
+      color:'#FFFFFF',
+      fontSize: 50,
+      fontWeight: '200',
+      width: 80,
+      justifyContent:'center',
+      alignItems:'center',
+    },
+    button: {
+      width: 80,
+      height: 30,
+      borderRadius: 30,
+      paddingLeft: 12,
+      paddingRight: 12,
+      paddingTop: 4,
+      paddingBottom: 4,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    buttonTitle: {
+      fontSize: 16,
+    },
+    buttonsRow: {
+      flexDirection: 'row',
+      alignSelf: 'stretch',
+      justifyContent: 'space-between',
+      marginTop: 60,
+    },
+    timerContainer: {
+      flexDirection: 'row',
+    },
+    timerText: {
+      fontFamily: 'monospace',
+    },
+    textSpacing: {
+      marginRight: -5,
+    }
+})
