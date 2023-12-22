@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, ScrollView } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import Timer from "../components/Timer/timer"
 import Stopwatch from "../components/Stopwatch/stopwatch"
@@ -31,7 +31,7 @@ export default function WorkoutProg() {
   // }, [])
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
     <Button style={styles.text} title="VIEW" onPress={fetchArray}/>
     <Picker
         selectedValue={selectedExercise}
@@ -59,12 +59,12 @@ export default function WorkoutProg() {
       <Button title="Save" /> 
       </View>
 
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollViewContent: {
     flex: 1,
     backgroundColor: '#000',
     alignItems: 'center',

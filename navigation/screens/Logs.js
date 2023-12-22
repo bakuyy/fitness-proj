@@ -40,8 +40,8 @@ export default function Logs() {
         <View style={styles.button}>
           <Button title='view' onPress={fetchArray}/>
         </View>
-        <View>
-          {getArray.map((logItem, index) => (
+        <View style={styles.logArray}>
+          {getArray.map((logItem, index) => (            
             <CreateLog
               key={index}
               logName={Object.keys(logItem)} 
@@ -76,4 +76,9 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     marginLeft:'10%'
   },
+  logArray: {
+    width:'100%',
+
+
+  }
 })
