@@ -27,8 +27,10 @@ const RepCounter = () => {
             <Picker.Item key={number} label={number} value={number} />
           ))}
         </Picker>
+        <Text>{rep}</Text>
+
+      
       </View>
-      <Text style={styles.selectedNumber}>Selected Number: {rep}</Text>
     </View>
   )
 }
@@ -45,22 +47,25 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
   },
   label: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'bold',
     marginRight: 10,
     marginTop: 5,
+    alignItems:'center',
+    justifyContent:'center',
+    marginBottom:10
   },
   picker: {
     marginTop: 9,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    padding: 8,
+    padding: 20,
     flex: 1,
+
   },
   selectedNumber: {
     fontSize: 18,
-    marginBottom: 100,
     alignSelf: 'center',
   },
 })
