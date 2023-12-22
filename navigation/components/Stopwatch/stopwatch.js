@@ -107,8 +107,10 @@ export default class Stopwatch extends Component {
     const formattedTime = `${duration.hours()}:${duration.minutes()}:${duration.seconds()}.${Math.floor(
       duration.milliseconds() / 10
     )}`;
-    console.log(formattedTime);
-  };
+    this.props.onTimeChange(formattedTime)
+
+    console.log(formattedTime)
+   }
 
   render() {
     const { now, start, laps } = this.state;
@@ -116,7 +118,6 @@ export default class Stopwatch extends Component {
     return (
       <View style={styles.container}>
         <Timer interval={laps.reduce((total, curr) => total + curr, 0) + timer} style={styles.timer} />
-        {/* Buttons */}
         {laps.length === 0 && (
           <ButtonsRow>
             <RoundButton

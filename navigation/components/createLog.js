@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 const CreateLog = ({logName, exercisesArray }) => {
-  const [ ,...remainingExercises] = exercisesArray;
 
   return (
 

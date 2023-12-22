@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  StatusBar,
-  TouchableOpacity,
-  Platform,
-} from 'react-native'
-
+import { StyleSheet, View, Text, TouchableOpacity, Platform } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    // backgroundColor: "#5271FF",
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: '5%',
@@ -67,10 +57,8 @@ const styles = StyleSheet.create({
   button2: {
     borderWidth: 5,
     borderColor: '#C1FF72',
-    marginTop:10,
-    borderRadius:20
-
-
+    marginTop: 10,
+    borderRadius: 20
   },
   pickerItem: {
     color: '#fff',
@@ -85,7 +73,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const formatNumber = number => `0${number}` . slice(-2)
+const formatNumber = number => `0${number}`.slice(-2)
 
 const getRemaining = time => {
   const minutes = Math.floor(time / 60)
@@ -96,7 +84,7 @@ const getRemaining = time => {
 const createArray = length => {
   const arr = []
   let i = 0
-  while(i < length){
+  while (i < length) {
     arr.push(i.toString())
     i += 1
   }
@@ -106,7 +94,7 @@ const createArray = length => {
 const AVAILABLE_MINUTES = createArray(60)
 const AVAILABLE_SECONDS = createArray(60)
 
-const Timer = () => {
+const Timer = ({ onTimeChange }) => {
   const [remainingSeconds, setRemainingSeconds] = useState(5)
   const [isRunning, setIsRunning] = useState(false)
   const [selectedMinutes, setSelectedMinutes] = useState('0')
@@ -121,9 +109,7 @@ const Timer = () => {
   }, [remainingSeconds, isRunning])
 
   const start = () => {
-    setRemainingSeconds(
-      parseInt(selectedMinutes, 10) * 60 + parseInt(selectedSeconds, 10)
-    )
+    setRemainingSeconds(parseInt(selectedMinutes, 10) * 60 + parseInt(selectedSeconds, 10))
     setIsRunning(true)
 
     interval = setInterval(() => {
@@ -131,17 +117,23 @@ const Timer = () => {
     }, 1000)
   }
 
+  const combined =() => {
+    start()
+    handleTimeChange()
+  }
+
   const stop = () => {
     clearInterval(interval)
     interval = null
     setRemainingSeconds(5)
     setIsRunning(false)
+    const timeString = `${minutes}:${seconds}`
+    onTimeChange(timeString)
   }
 
   const handleTimeChange = () => {
     const timeString = `${selectedMinutes}:${selectedSeconds}`
-    console.log('Selected time:', timeString)
-    // Do something with the timeString, e.g., save it
+    onTimeChange(timeString)
   }
 
   const renderPickers = () => (
@@ -177,27 +169,21 @@ const Timer = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" />
       {isRunning ? (
         <Text style={styles.timerText}>{`${minutes}:${seconds}`}</Text>
       ) : (
         renderPickers()
       )}
       {isRunning ? (
-        <TouchableOpacity
-          onPress={stop}
-          style={[styles.button, styles.buttonStop]}
-        >
+        <TouchableOpacity onPress={stop} style={[styles.button, styles.buttonStop]}>
           <Text style={[styles.buttonText, styles.buttonTextStop]}>Stop</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity onPress={start} style={styles.button}>
+        <TouchableOpacity onPress={combined} style={styles.button}>
           <Text style={styles.buttonText}>Start</Text>
         </TouchableOpacity>
       )}
 
-      <TouchableOpacity onPress={handleTimeChange} style={styles.button2}>
-      </TouchableOpacity>
     </View>
   )
 }

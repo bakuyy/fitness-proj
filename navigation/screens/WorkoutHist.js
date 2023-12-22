@@ -4,11 +4,17 @@ import { FIREBASE_DB } from '../Firebase/creds'
 import { doc, getDoc } from '@firebase/firestore'
 import { Picker } from '@react-native-picker/picker'
 import WorkoutProg from './WorkoutProg'
+import { useNavigation } from '@react-navigation/native'
 
-export default function WorkoutHist({ navigation }) {
+
+export default function WorkoutHist() {
   const [getArray, setGetArray] = useState([])
   const [selectedExercise, setSelectedExercise] = useState('')
   const [partner, setPartner] = useState('')
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const navigation = useNavigation();
+
+
 
   const fetchArray = async () => {
     const docRef = doc(FIREBASE_DB, 'profiles', 'Profile')
@@ -25,6 +31,9 @@ export default function WorkoutHist({ navigation }) {
   }
 
   const handleComplete = () => {
+    setShowConfirmation(true)
+    navigation.navigate('Good Job!!');
+
   }
 
   return (

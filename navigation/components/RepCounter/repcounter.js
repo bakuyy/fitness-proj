@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 
-const RepCounter = () => {
+const RepCounter = ({ onRepChange }) => {
   const [rep, setRep] = useState('0')
 
   const repChange = (itemValue) => {
     setRep(itemValue)
+    onRepChange(itemValue) 
   }
 
   const numbersArray = []
@@ -28,8 +29,6 @@ const RepCounter = () => {
           ))}
         </Picker>
         <Text>{rep}</Text>
-
-      
       </View>
     </View>
   )
