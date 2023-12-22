@@ -21,6 +21,7 @@
     "core-js": "^3.33.3",
     "execa": "^8.0.1",
     "expo": "^49.0.21",
+    "expo-checkbox": "~2.4.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "firebase": "^10.7.1",
