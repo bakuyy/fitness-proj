@@ -7,7 +7,7 @@ export default function Workout({navigation}) {
   return (
     <View style={styles.container}>
         <Text>
-        <Button title="START YOUR WORKOUT" onPress={() => navigation.navigate('WorkoutProg')} />
+        <Button title="START YOUR WORKOUT" onPress={() => navigation.navigate('Workout Started!')} />
         </Text>    
     </View>
   )
