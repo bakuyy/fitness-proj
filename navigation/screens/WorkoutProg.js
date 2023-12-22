@@ -7,10 +7,12 @@ import Repcounter from '../components/RepCounter/repcounter'
 export default function WorkoutProg() {
   const [name, setName] = useState('');
   const [workouts, startWorkouts] = useState("Pushups")
+  const [number, setNumber] = useState('0')
+
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
-   
+
       <View style={styles.repCounter}>
       <Repcounter/>
     </View>
@@ -81,6 +83,9 @@ const styles = StyleSheet.create({
 
   button: {
     marginTop:10,
+  },
+  testMargin: {
+    marginTop:100
   }
 
 });

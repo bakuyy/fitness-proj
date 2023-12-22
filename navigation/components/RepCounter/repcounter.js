@@ -1,53 +1,66 @@
-import React from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 
 const RepCounter = () => {
-    const [rep, setRep] = useState('0')
-  
-    const repChange = (text) => {
-      setRep(text)
-    }
-  
-    return (
-      <View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Reps</Text>
-          <TextInput
-            style={styles.input}
-            value={rep}
-            onChangeText={repChange}
-            placeholder="Reps..."
-            keyboardType="numeric"
-          />
-        </View>
-      </View>
-    )
+  const [rep, setRep] = useState('0')
+
+  const repChange = (itemValue) => {
+    setRep(itemValue)
   }
-  
-  export default RepCounter
-  
-  const styles = StyleSheet.create({
-    inputContainer: {
-      flexDirection: 'row',
-      width:'38%',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: 9,
-      marginHorizontal: 18,
-    },
-    label: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      marginRight: 10,
-      marginTop:5
-    },
-    input: {
-      marginTop:9,
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 5,
-      padding: 8,
-      flex: 1,
-    },
-  })
+
+  const numbersArray = []
+  for (let i = 1; i <= 100; i++) {
+    numbersArray.push(String(i))
+  }
+
+  return (
+    <View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Reps</Text>
+        <Picker
+          selectedValue={rep}
+          style={styles.picker}
+          onValueChange={repChange}
+        >
+          {numbersArray.map((number) => (
+            <Picker.Item key={number} label={number} value={number} />
+          ))}
+        </Picker>
+      </View>
+      <Text style={styles.selectedNumber}>Selected Number: {rep}</Text>
+    </View>
+  )
+}
+
+export default RepCounter
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: 'row',
+    width: '38%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 9,
+    marginHorizontal: 18,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 10,
+    marginTop: 5,
+  },
+  picker: {
+    marginTop: 9,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 8,
+    flex: 1,
+  },
+  selectedNumber: {
+    fontSize: 18,
+    marginBottom: 100,
+    alignSelf: 'center',
+  },
+})
