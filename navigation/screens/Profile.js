@@ -62,7 +62,6 @@ export default function Profile({ navigation }) {
       Pushups: 1,
       Situps: 42,
       Pullups: 10,
-      BeepTest: '5:30'
     });
     testSetUpdated(true);
 

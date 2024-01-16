@@ -21,7 +21,7 @@
     "core-js": "^3.33.3",
     "execa": "^8.0.1",
     "expo": "^49.0.21",
-    "expo-av": "^13.6.0",
+    "expo-av": "^13.4.1",
     "expo-checkbox": "~2.4.0",
     "expo-cli": "^6.3.10",
     "expo-splash-screen": "~0.20.5",
